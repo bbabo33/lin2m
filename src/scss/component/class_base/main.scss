@@ -1,0 +1,28 @@
+@import '@/scss/_variable.scss';
+@import '@/scss/_mixin.scss';
+
+@include pc {
+    // width: 100%;
+    // margin: 10px;
+
+    .main {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        
+        & .content {
+            background-color: $color07;
+
+            position: absolute;
+            min-width: 1113px;
+            min-height: 800px;
+            top: 10px;
+            left: 10px;
+        }
+    }
+}
+
+@include mo {
+    // width: 100%;
+    // margin: 0;
+}

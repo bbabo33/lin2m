@@ -1,5 +1,4 @@
-import Main from './component/class_base/main';
-// npm install node-sass 필요
+import Main from '@/component/class_base/main';
 import './scss/_global.scss';
 
 /**
@@ -14,6 +13,14 @@ import './scss/_global.scss';
  *      status가 병합되는 과정을 거치면서 데이터가 유실되거나 하는 문제점이 적을거라 판단
  * 
  * 2. path alias
+ *    2-1. npm run eject로 config 파일 내부 webpack.config.js 에서 alias 수정
+ *    2-2. Using `babel-preset-react-app` requires that you specify ~ 와 같은 오류가 계속 떠서
+ *         eslintConfig -> "eslintConfig" 속성에 "env": {"NODE_ENV": "development"}
+ *         속성 추가함
+ *         참고) https://github.com/facebook/create-react-app/issues/12070
+ * 
+ * 3. scss
+ *    3-1. npm install node-sass 하여 scss 읽을 수 있도록 함
  *    
  *      
  * @returns 

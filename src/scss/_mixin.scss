@@ -1,0 +1,16 @@
+@import '@/scss/_variable.scss';
+
+// 참고 https://chaewonkong.github.io/posts/scss-media-query.html
+
+// 컨텐츠 영역에 들어가는 값은 고정적인 크기를 잡음
+@mixin pc {
+    @media(max-width: #{$max-pc}) and (min-width: #{$min-pc}) {
+        @content;
+    }
+}
+
+@mixin mo {
+    @media(max-width: #{$max-mo}) and (min-width: #{$min-mo}) {
+        @content;
+    }
+}

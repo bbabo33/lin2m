@@ -1,0 +1,17 @@
+@import '@/scss/_variable.scss';
+
+.list {
+    height: 100%;
+
+    &--search {
+        min-height: 71px;
+        height: 12%; // 기준값 580px 중 71px이므로 약 88%
+        background-color: $color02;
+    }
+
+    &--content {
+        min-height: 511px;
+        height: 88%; // 기준값 580px 중 511px이므로 약 88%
+        background-color: $color03;
+    }
+}

@@ -1,25 +1,39 @@
 @import '@/scss/_variable.scss';
 @import '@/scss/_mixin.scss';
 
+/**
+***************** 단위를 픽셀이 아니라 vw 로 사용
+height, width에서 사용하는 %는 부모 요소를 기준으로 측정
+때문에 height 와 widht를 사용하려는 부모요소에도 height, width가 적용되어 있어야 한다
+
+그러나 vw, vh는 viewport를 기준으로 적용되기 때문에 부모의 요소와 상관없이 적용가능
+*/
+.main {
+    // width: 100vw;
+    // height: 100vh;
+
+    &--header {
+        height: 70px;
+    }
+
+    &--content {
+        margin: auto;
+        width: 90vw;
+        max-width: 1325px;
+        // min-height: calc(100vh - 140px);
+        height: calc(100vh - 140px);
+        background-color: $color07;
+
+    }
+
+    &--footer {
+        height: 70px;
+    }
+}
+
 @include pc {
     // width: 100%;
     // margin: 10px;
-
-    .main {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        
-        & .content {
-            background-color: $color07;
-
-            position: absolute;
-            min-width: 1113px;
-            min-height: 800px;
-            top: 10px;
-            left: 10px;
-        }
-    }
 }
 
 @include mo {

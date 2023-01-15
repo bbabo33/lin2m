@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import '@/scss/component/function_base/linList.scss';
+import { InfoFrame } from '@/component/parts/info_frame';
 
 function LinList(props) {
 
@@ -7,7 +8,9 @@ function LinList(props) {
     return(
         // <Fragment>
         <div className="list">
-            <div className="list--search"></div>
+            <div className="list--search">
+                <InfoFrame bgColor="color03" borderRadius="10" />
+            </div>
             <div className="list--content"></div>
         </div>
         // </Fragment>

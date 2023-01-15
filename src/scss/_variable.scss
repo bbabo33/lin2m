@@ -9,10 +9,25 @@ $color07: #ffffff;
 $color08: #00e668;
 $color09: #aeaaaa;
 
+// map 형태로 변수 선언
+$colors: (
+    color01: #22252F
+    ,color02: #08599e
+    ,color03: #2685d5
+    ,color04: #6bb1ed
+    ,color05: #96bfed
+    ,color06: #F4F8FF
+    ,color07: #ffffff
+    ,color08: #00e668
+    ,color09: #aeaaaa
+);
+
 // 크기 기준
 // 숫자로 값 넘기고 크기 기준 $size + $px 이런식으로 mixin에서 쓰니까
 // "1120px" 과 같이 텍스트로 인식해서 css가 안먹히는 현상이 발생함
 $px: 'px';
+$vh: 'vh';
+$vw: 'vw';
 
 // PC/MOBILE 크기 기준
 // 화면을 줌 in / out 하면 화면의 크기가 달라짐 때문에 80% / 125% 확대 축소의 boundary값으로 잡음

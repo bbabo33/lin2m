@@ -1,12 +1,12 @@
 import React from 'react';
 import '@/scss/component/class_base/main.scss';
-import { LinList } from '@/component/function_base/linList'
+import { LinList } from '@/component/function_base/linList';
 
 export default class main extends React.Component {
     
-    constructor() {
-        super();
-    }
+    // constructor() {
+    //     super();
+    // }
 
     render() {
         return (

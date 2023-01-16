@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import '@/scss/component/parts/info_frame.scss';
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { colorTheme, unitProvider, twoWayCss } from '@/component/global/provider';
+
+const Container = styled.div
+        `
+        background-color: ${props => colorTheme[props.bgColor] || 'white'};
+        border-radius: ${props => unitProvider(props.borderRadius || 20, 'px')};
+        padding: ${props => twoWayCss(props.padding.tb, props.padding.lr, 'px')};
+        min-height: ${props => unitProvider(props.minHeight || 20, 'px')};
+        `
+;
 
 /**
  * 검색조건 / content 등 내용을 담는 틀
@@ -15,8 +24,10 @@ import styled, { css } from "styled-components";
  */
 function InfoFrame(props) {
 
-    const [bgColor, setBgColor] = useState('color08');
+    const [bgColor, setBgColor] = useState('$color08');
     const [borderRadius, setBorderRadius] = useState(0);
+    const [padding, setPadding] = useState({tb: 0, lr: 0});
+    const [minHeight, setMinHeight] = useState(0);
 
     /**
      * https://ko.reactjs.org/docs/hooks-effect.html
@@ -36,61 +47,65 @@ function InfoFrame(props) {
      *  
      *  -> 2. styled-components 사용
      *      -> 결국 inline css로 색상표 활용못함
+     *      -> 어떤 경우에 사용하는게 맞는지
+     */
+
+    /**
+     * bgColor useEffect
      */
     useEffect(() => {
-        setBgColor(props.bgColor || 'color08');
-        setBorderRadius(props.borderRadius || 0);
-        makeRender();
-    })
+        setBgColor(props.bgColor);
+        // makeRender();
+    }, [props.bgColor]);
 
-    function makeRender() {
+    /**
+     * borderRadius useEffect
+     */
+    useEffect(() => {
+        setBorderRadius(props.borderRadius);
+        // makeRender();
+    }, [props.borderRadius]);
 
-        // 1. 테스트 용도로 bgColor를 className과 유사하게 맵핑하여 사용은 해봄
-        // return (
-        // <div className={ bgColor }>
-        //     { bgColor }
-        // </div>
-        // )
+    /**
+     * padding useEffect
+     */
+    useEffect(() => {
+        setPadding(props.padding);
+        // makeRender();
+    }, [props.padding]);
 
-        // 2. styled Component
-        // 코드화된 색상 원값으로 찾기
-        let colorText = findColor(bgColor);
+    /**
+     * minHeight useEffect
+     */
+    useEffect(() => {
+        setMinHeight(props.minHeight);
+        // makeRender();
+    }, [props.minHeight]);
 
-        const Container = styled.div(
-            css`
-            background-color: #2685d5;
-            border-radius: 10px;
-            padding: 13.5px 40px;
-            min-height: 43px;
-            `,
-        );
+    // function makeRender() {
 
-        return (
-            <Container bg={colorText} borderRadius={borderRadius} >
-                검색조건 용도 컴포넌트
-            </Container>
-        );
-    }
+    //     // 1. 테스트 용도로 bgColor를 className과 유사하게 맵핑하여 사용은 해봄
+    //     // return (
+    //     // <div className={ bgColor }>
+    //     //     { bgColor }
+    //     // </div>
+    //     // )
 
-    function findColor(codeColor) {
-        // 컬러표
-        const colors = {
-            color01: '#22252F'
-            ,color02: '#08599e'
-            ,color03: '#2685d5'
-            ,color04: '#6bb1ed'
-            ,color05: '#96bfed'
-            ,color06: '#F4F8FF'
-            ,color07: '#ffffff'
-            ,color08: '#00e668'
-            ,color09: '#aeaaaa'
-        };
+    //     // 2. styled Component
+    //     // 코드화된 색상 원값으로 찾기
+    //     //let colorText = findColor(bgColor);
 
-        return colors[codeColor] || 'white';
-    }
+    //     return (
+    //         <Container bgColor={bgColor} borderRadius={borderRadius} padding={padding} minHeight={minHeight}>
+    //             검색조건 용도 컴포넌트
+    //         </Container>
+    //     );
+    // }
 
     return (
-        makeRender()
+        <Container bgColor={bgColor} borderRadius={borderRadius} padding={padding} minHeight={minHeight}>
+            { props.children }
+        </Container>
     );
 }
 

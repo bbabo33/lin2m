@@ -1,9 +1,0 @@
-@import '@/scss/_variable.scss';
-
-@each $name, $value in $colors {
-    .#{$name} {
-        background-color: $value;
-    }
-}
-
-

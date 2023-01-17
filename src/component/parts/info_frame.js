@@ -4,7 +4,7 @@ import { colorTheme, unitProvider, twoWayCss } from '@/component/global/provider
 
 const Container = styled.div
         `
-        background-color: ${props => colorTheme[props.bgColor] || 'white'};
+        background-color: ${props => colorTheme[props.bgColor] || '#ffffff'};
         border-radius: ${props => unitProvider(props.borderRadius || 20, 'px')};
         padding: ${props => twoWayCss(props.padding.tb, props.padding.lr, 'px')};
         min-height: ${props => unitProvider(props.minHeight || 20, 'px')};

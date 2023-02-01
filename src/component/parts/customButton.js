@@ -4,6 +4,8 @@ import { colorTheme, unitProvider, twoWayCss } from '@/component/global/provider
 
 const CButton = styled.button
                 `
+                width: 100%;
+                height: 100%;
                 color: ${props => colorTheme[props.color] || '#22252F'};
                 background: ${props => colorTheme[props.bgColor] || '#ffffff'};
                 font-size: ${props => unitProvider(props.size || 20, 'px')};

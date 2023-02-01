@@ -1,5 +1,8 @@
 /**
  * styled-component에 활용하는 css를 컨버팅하는 역할
+ * 
+ * css-in-js 라는 워딩에서
+ * js에 css를 입히는 느낌으로 provider를 만들었음
  */
 const colorTheme = {
     // 컬러표. _variable.scss와 일치해야함
@@ -42,4 +45,23 @@ const twoWayCss = function(tb, lr, unit) {
     return `${unitProvider(_tb, _unit)} ${unitProvider(_lr, _unit)}`
 }
 
-export { colorTheme, unitProvider, twoWayCss } 
+/**
+ * 네방향 값 주기
+ * @param {*} t 
+ * @param {*} r 
+ * @param {*} b 
+ * @param {*} l 
+ * @param {*} unit 
+ */
+const forWayCss = function (t, r, b, l, unit) {
+    const _t = t || 0;
+    const _r = r || 0;
+    const _b = b || 0;
+    const _l = l || 0;
+
+    const _unit = unit || 'px';
+
+    return `${unitProvider(_t, _unit)} ${unitProvider(_r, _unit)} ${unitProvider(_b, _unit)} ${unitProvider(_l, _unit)}`
+}
+
+export { colorTheme, unitProvider, twoWayCss, forWayCss } 

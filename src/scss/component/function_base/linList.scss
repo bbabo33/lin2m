@@ -3,15 +3,41 @@
 .list {
     height: 100%;
 
-    &--search {
+    &-search {
         min-height: 71px;
         height: 12%; // 기준값 580px 중 71px이므로 약 12%
         background-color: $color01;
+
+        &--area {
+            display: flex;
+            justify-content: space-between;
+
+            &--group {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                min-width: 251px;
+                gap: 10px;
+
+                & .search {
+                    &-title {
+                        color: $color07;
+                        font-size: 23px;
+                        min-width: 92px;
+                    }
+                    
+                    &-text {
+                        width: 70%;
+                    }
+                }
+            }
+        }
     }
 
-    &--content {
-        min-height: 511px;
-        height: 88%; // 기준값 580px 중 511px이므로 약 88%
+    &-content {
+        // min-height: 511px;
+        // height: 88%; // 기준값 580px 중 511px이므로 약 88%
+        height: 440px;
         background-color: $color07;
     }
 }

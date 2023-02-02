@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import styled from "styled-components";
 import '@/scss/component/function_base/grid.scss';
 import { colorTheme, unitProvider, forWayCss } from '@/component/global/provider';
@@ -10,6 +10,8 @@ const Container = styled.div
                     width: 100%;
                     box-sizing: border-box;
                     font-size: ${props => unitProvider(props.size || 28, 'px')};
+                    max-height: 440px;
+                    overflow-y: scroll;
                     `;
 
 // 테이블에 border-collapse: collapse 주면 border-radius 안먹음. table-layout:fixed 사용
@@ -110,36 +112,41 @@ function Grid(props) {
     }
 
     return (
-        <Container>
-            <Table className="grid-table">
-                <colgroup>
-                    {columns && columns.map((x, idx) => {return <col key={`colgroup-${idx}`} width={x.width} />})}
-                </colgroup>
-                <THead hColor={hColor} hBackGround={hBackGround} >
-                    <RadiusTr radius={{t: 10, r: 10, b:0, l:0}}>
-                        {columns && columns.map((x, idx) => {return <td key={`th-${idx}`}>{x.nm}</td>})}
-                    </RadiusTr>
-                </THead>
-                <TBody bColor={bColor} bBackGround={bBackGround} >
-                    {
-                        datas && datas.map((row, trIdx) => {
-                            return( 
-                                <Tr className="grid-rows" key={`tr-${trIdx}`} onClick={(e) => rowFunc(row, e)}>
-                                    {
-                                        Object.entries(row).map(([key, value]) => {
-                                            return <td key={`td-${key}`}>{value}</td>
-                                        })
-                                    }
-                                </Tr>
-                            )
-                        })
-                    }
-                </TBody>
-            </Table>
-            <div className="btn-area">
-                <CustomButton bgColor="$color05" size={28} color="$color07" weight={400} borderRadius={0} padding={{tb: 0, lr: 0 }} click={buttonFunc}>+more</CustomButton>
+        <Fragment>
+            <div className="grid-btns">
+                <CustomButton bgColor="$color08" size={23} color="$color01" weight={400} borderRadius={10} padding={{tb: 6, lr: 19 }} click={buttonFunc}>검색</CustomButton>
             </div>
-        </Container>
+            <Container>
+                <Table className="grid-table">
+                    <colgroup>
+                        {columns && columns.map((x, idx) => {return <col key={`colgroup-${idx}`} width={x.width} />})}
+                    </colgroup>
+                    <THead hColor={hColor} hBackGround={hBackGround} >
+                        <RadiusTr radius={{t: 10, r: 10, b:0, l:0}}>
+                            {columns && columns.map((x, idx) => {return <td key={`th-${idx}`}>{x.nm}</td>})}
+                        </RadiusTr>
+                    </THead>
+                    <TBody bColor={bColor} bBackGround={bBackGround} >
+                        {
+                            datas && datas.map((row, trIdx) => {
+                                return( 
+                                    <Tr className="grid-rows" key={`tr-${trIdx}`} onClick={(e) => rowFunc(row, e)}>
+                                        {
+                                            Object.entries(row).map(([key, value]) => {
+                                                return <td key={`td-${key}`}>{value}</td>
+                                            })
+                                        }
+                                    </Tr>
+                                )
+                            })
+                        }
+                    </TBody>
+                </Table>
+                <div className="btn-area">
+                    <CustomButton bgColor="$color05" size={28} color="$color07" weight={400} borderRadius={0} padding={{tb: 0, lr: 0 }} click={buttonFunc}>+more</CustomButton>
+                </div>
+            </Container>
+        </Fragment>
     );
 }
 

@@ -5,6 +5,17 @@
         text-align: center;
     }
 
+    &-btns {
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 10px;
+        background-color: $color01;
+
+        button {
+            max-width: 140px; 
+        }
+    }
+
     &-rows {
         &:hover {
             cursor: pointer;

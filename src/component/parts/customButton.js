@@ -85,7 +85,7 @@ function CustomButton(props) {
                     weight={weight} 
                     borderRadius={borderRadius} 
                     padding={padding}
-                    onClick={() => props.click({name: 'hong', title: '성진'})}
+                    onClick={() => props.click()}
                     >
                         {props.children}
             </CButton>

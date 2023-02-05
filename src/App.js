@@ -21,6 +21,8 @@ import './scss/_global.scss';
  * 
  * 3. scss
  *    3-1. npm install node-sass 하여 scss 읽을 수 있도록 함
+ *  
+ * 4. axios
  *    
  *      
  * @returns 

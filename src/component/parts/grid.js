@@ -75,7 +75,7 @@ function Grid(props) {
   const [hBackGround, setHBackGround] = useState('$color07');
   const [bColor, setBColor] = useState('$color01');
   const [bBackGround, setBBackGround] = useState('$color07');
-  const [datas, setDatas] = useState([]);
+  // const [datas, setDatas] = useState([]);
 
   useEffect(() => {
     // console.log(props.colums);
@@ -102,14 +102,18 @@ function Grid(props) {
     setBBackGround(props.bBackGround);
   }, [props.bBackGround]);
 
-  useEffect(() => {
-    // console.log(props.datas);
-    setDatas(props.datas);
-  }, [props.datas]);
+  // useEffect(() => {
+  //   console.log(props.datas);
+  //   setDatas(props.datas);
+  // }, [props.datas]);
 
   function rowFunc(val, e) {
     console.log(val);
     console.log(e);
+  }
+
+  function emitBtnFunc() {
+    props.moreBtnFunc();
   }
 
   return (
@@ -129,32 +133,32 @@ function Grid(props) {
           </THead>
           <TBody bColor={bColor} bBackGround={bBackGround} >
             {
-              datas.length > 0?
-              datas.map((row, trIdx) => {
-                return (
-                  <Tr className="grid-rows" key={`tr-${trIdx}`} onClick={(e) => rowFunc(row, e)}>
-                    {
-                      Object.entries(row).map(([key, value]) => {
-                        return <td key={`td-${key}`}>{value}</td>
-                      })
-                    }
-                  </Tr>
-                )
-              })
-              : <Tr><ColspanTd colSpan={7}>검색결과가 존재하지 않습니다</ColspanTd></Tr>
+              props.datas.length > 0 ?
+                props.datas.map((row, trIdx) => {
+                  return (
+                    <Tr className="grid-rows" key={`tr-${trIdx}`} onClick={(e) => rowFunc(row, e)}>
+                      {
+                        Object.entries(row).map(([key, value]) => {
+                          return <td key={`td-${key}`}>{value}</td>
+                        })
+                      }
+                    </Tr>
+                  )
+                })
+                : <Tr><ColspanTd colSpan={7}>검색결과가 존재하지 않습니다</ColspanTd></Tr>
             }
           </TBody>
-      </Table>
-      <div className="btn-area">
+        </Table>
         {
-          datas.length === 0 ?//데이터가 없으면 보이지 않음
-            null
-            : <CustomButton bgColor="$color05" size={28} color="$color07" weight={400} borderRadius={0} padding={{ tb: 0, lr: 0 }} click={props.moreBtnFunc}>+more</CustomButton>
+        props.datas.length === 0 || !props.showMore? //데이터가 없으면 보이지 않음
+        null
+        :<div className="btn-area">
+            <CustomButton bgColor="$color05" size={28} color="$color07" weight={400} borderRadius={0} padding={{ tb: 0, lr: 0 }} click={emitBtnFunc}>+more</CustomButton>
+        </div>
         }
-      </div>
-    </Container>
-        </Fragment >
-    );
+      </Container>
+    </Fragment >
+  );
 }
 
 export { Grid };

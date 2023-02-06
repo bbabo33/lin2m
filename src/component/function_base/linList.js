@@ -3,7 +3,7 @@ import React from 'react';
 import '@/scss/component/function_base/linList.scss';
 import { InfoFrame } from '@/component/parts/info_frame';
 import { CustomButton, CustomSelectBox, CustomInputBox, Grid } from '@/component/parts/index';
-import { customLinAxios, AxiosAll } from '@/axios/Axios';
+import { customLinAxios } from '@/axios/Axios';
 import { itemGrade } from '@/component/global/commonCode';
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ export default class LinList extends React.Component {
 
     this.state = {
       loading: false,      // 로딩
+      gridData: [],           // 그리드에 전달하는 data
       search: {            // 검색 조회 파라미터
         server_id: '',
         search_keyword: '',
@@ -30,7 +31,7 @@ export default class LinList extends React.Component {
         , { name: '6', value: 6 }
       ],
       serverOptions: [],      // 검색 조건 서버
-      gridData: [],           // 그리드에 전달하는 data
+      lastPage: 0,            // 그리드 라스트 페이지
       columns: [             // 그리드에 전달하는 columns
         { nm: '서버명', width: '15%' }
         , { nm: '아이템명', width: '25%' }
@@ -74,6 +75,9 @@ export default class LinList extends React.Component {
       }
     });
 
+    let searchParam = this.state.search;
+    searchParam.page = 1;
+
     const _self = this;
 
     const apis = [
@@ -85,8 +89,14 @@ export default class LinList extends React.Component {
 
   // 그리드 안에 더보기버튼
   moreBtnFunc = function() {
-    let pageNum = this.state.search.page;
 
+    const _self = this;
+
+    /**
+     * 이 경우, 바로 state가 변경되지 않음
+     * setState 호출은 비동기적으로 이뤄지기 때문에 브라우저 이벤트가 끝날 시점에 state를 일괄적으로 업데이트한다
+     */
+    let pageNum = this.state.search.page;
     this.setState({
       search: {
         ...this.state.search
@@ -94,16 +104,20 @@ export default class LinList extends React.Component {
       }
     });
 
-    const _self = this;
+    let searchParam = this.state.search;
+    searchParam.page = searchParam.page + 1;
+
+    // console.log(this.state.search);
+    // console.log(searchParam);
 
     const apis = [
-      {api: customLinAxios.get('/market/items/search', { params: this.state.search }), callBack: this.parseSearchItem}
+      {api: customLinAxios.get('/market/items/search', { params: searchParam }), callBack: this.parseSearchItem}
     ];
 
     this.axiosAll(apis, _self);
   }
 
-  selectServerChange = function (obj) {
+  selectServerChange (obj) {
     this.setState({
       search: {
         ...this.state.search
@@ -112,7 +126,7 @@ export default class LinList extends React.Component {
     });
   }
 
-  selectEnchantChange = function (obj) {
+  selectEnchantChange (obj) {
     this.setState({
       search: {
         ...this.state.search
@@ -121,7 +135,7 @@ export default class LinList extends React.Component {
     });
   }
 
-  selectItemChange = function (obj) {
+  selectItemChange (obj) {
     this.setState({
       search: {
         ...this.state.search
@@ -146,7 +160,14 @@ export default class LinList extends React.Component {
 
   // 아이템 목록 조회 parse
   parseSearchItem(items, _self) {
-    let gridData = [];
+    
+    let gridData;
+
+    if( _self.state.search.page === 1 ) {
+      gridData = [];
+    } else {
+      gridData = _self.state.gridData;
+    }
 
     (items.contents || []).forEach((item) => {
       gridData.push(
@@ -162,7 +183,11 @@ export default class LinList extends React.Component {
       );
     });
 
-    _self.setState({ gridData: gridData })
+    _self.setState({ gridData: gridData, lastPage: items.pagination.last_page });
+  }
+
+  enterPress() {
+    this.searchBtnFunc();
   }
 
   // 해당 class에서 데이터를 조회하는 hook 기준은 componentDidMount
@@ -174,10 +199,13 @@ export default class LinList extends React.Component {
     const apis = [
       {api: customLinAxios.get('/market/servers'), callBack: this.parseSearchServer}
       , {api: customLinAxios.get('/market/items/search', { params: this.state.search }), callBack: this.parseSearchItem}
-      
     ]
 
     this.axiosAll(apis, _self);
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.gridData);
   }
 
   render() {
@@ -199,7 +227,7 @@ export default class LinList extends React.Component {
               <div className="list-search--area--group">
                 <div className="search-title">아이템</div>
                 <div className="search-text">
-                  <CustomInputBox change={this.selectItemChange.bind(this)} name='itemNm' />
+                  <CustomInputBox enterPress={this.enterPress.bind(this)} change={this.selectItemChange.bind(this)} name='itemNm' />
                 </div>
               </div>
               <div className="list-search--area--group">
@@ -219,7 +247,16 @@ export default class LinList extends React.Component {
           </InfoFrame>
         </div>
         <div className="list-content">
-          <Grid colums={this.state.columns} hColor="$color07" hBackGround="$color05" bColor="$color01" bBackGround="$color06" datas={this.state.gridData} moreBtnFunc={this.moreBtnFunc.bind(this)} />
+          <Grid 
+            colums={this.state.columns} 
+            hColor="$color07" 
+            hBackGround="$color05" 
+            bColor="$color01" 
+            bBackGround="$color06" 
+            datas={this.state.gridData} 
+            moreBtnFunc={this.moreBtnFunc.bind(this)}
+            showMore={this.state.search.page != 0 && this.state.lastPage > this.state.search.page}
+          />
         </div>
       </div>
       // </Fragment>

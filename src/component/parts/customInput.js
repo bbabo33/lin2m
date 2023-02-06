@@ -42,8 +42,16 @@ function CustomInputBox(props) {
         props.change({name: props.name, val : target.value});
     }
 
+    function emitKeyPressValue(e) {
+        // 엔터일 경우 이벤트 올림
+        if(e.key === 'Enter') {
+            props.enterPress(e.target);
+        }
+    }
+
     return (
             <CInputBox
+                onKeyPress={(e) => emitKeyPressValue(e)}
                 onChange={(e) => emitValue(e.target)}
             />
     );

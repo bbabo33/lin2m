@@ -13,7 +13,6 @@ export default class LinList extends React.Component {
     super();
 
     this.state = {
-      loading: false,      // 로딩
       gridData: [],           // 그리드에 전달하는 data
       search: {            // 검색 조회 파라미터
         server_id: '',
@@ -60,13 +59,14 @@ export default class LinList extends React.Component {
       console.log(err);
     })
     .finally(() => {
-      this.setState({ loading: false });
+      // this.setState({ loading: false });
+      _self.props.changeLoading(false);
     });
   }
 
   // 검색버튼
   searchBtnFunc = function () {
-    // console.log(this.state.search);
+    this.props.changeLoading(true);
 
     this.setState({
       search: {
@@ -192,7 +192,6 @@ export default class LinList extends React.Component {
 
   // 해당 class에서 데이터를 조회하는 hook 기준은 componentDidMount
   componentDidMount() {
-    this.setState({ loading: true });
 
     const _self = this;
 
@@ -209,7 +208,7 @@ export default class LinList extends React.Component {
   }
 
   render() {
-    if (this.state.loading) return <div>로딩중...</div>
+    // if (this.state.loading) return <div>로딩중...</div>
     return (
       // Fragment 쓰면 DOM안에서 리딩 후 지워진다
       // <Fragment>
